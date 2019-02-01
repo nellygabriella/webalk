@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<title>Movie Form</title>
+</head>
+<body>
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Cím</th>
+      <th scope="col">Tartalom</th>
+      <th scope="col">Év</th>
+      <th scope="col">Műfaj</th>
+      <th scope="col">Szereplők</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody  th:each="movie : ${movies}">
+    <tr>
+      <th th:text="${movie.title}"></th>
+      <td th:text="${movie.description}"></td>
+      <td th:text="${movie.year}"></td>
+      <td th:each="genre,iterStat:${movie.genre}"
+										th:text="${genre.genre}"></td>
+      <td><span th:each="actor,iterStat:${movie.cast}"
+										th:text="!${iterStat.last}? ${actor.name} + ', ' : ${actor.name}"></span></td>
+	  <td><a th:href="@{editmovie(id=${movie.id})}">Módosit</a></td>
+	  <td><a th:href="@{deletemovie(id=${movie.id})}">Töröl</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<title>Movie Form</title>
+
+<style>
+.card{
+	width:70%;
+	margin-bottom:100px;
+	align:center;
+}
+</style>
+</head>
+<body>
+
+
+<div class="card">
+<div class="card-header">Új film felvétele</div>
+<div class="card-body">
+<form  th:object="${movie}" th:action="${#httpServletRequest.queryString} != null?  @{updatemovie(id=${movie.id})} : @{/movie}" method="post">
+    <div class="form-group">
+         <label>Cím:</label>
+         <input type="text" class="form-control" th:field="*{title}"/>
+         <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</p>
+     </div>
+     <div class="form-group">
+         <label>Tartalom:</label>
+         <textarea type="textarea" class="form-control" th:field="*{description}"/>
+         <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">error</p>
+     </div>
+     <div class="form-group">
+         <label>Év:</label>
+         <input type="text" class="form-control" th:field="*{year}"/>
+         <p th:if="${#fields.hasErrors('year')}" th:errors="*{year}"/>
+      </div>
+      <div class="form-group">
+            <label>Műfaj</label><br/>
+            <select class="form-control js-example-basic-single" th:field="${movie.genre}" >
+                <option th:each="genre: ${genre}" th:text="${genre.genre}"
+th:value="${{genre}}"></option>
+            </select>
+		</div>
+		<div class="form-group">
+            <label>Főszereplők</label><br/>
+            <select class="form-control js-example-basic-multiple" th:field="${movie.cast}" multiple="multiple" >
+                <option th:each="actor: ${cast}" th:text="${actor.name}"
+th:value="${{actor}}"></option>
+            </select>
+		</div>
+		
+      <button type="submit" class="btn btn-success">Mentés</button>
+       
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script th:inline="javascript">
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+</script>
+</body>
+</html>
